@@ -1,0 +1,7 @@
+
+FAISS/kb/index.pkl
+FAISS/kb/index.faiss
+FAISS/Metadata.json
+*.pyc
+Pinecone/Metadata.json
+.env
