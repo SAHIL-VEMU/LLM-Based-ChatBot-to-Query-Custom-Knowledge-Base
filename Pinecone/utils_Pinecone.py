@@ -82,8 +82,8 @@ def get_chunks(text):
     # text splitter
     text_splitter = RecursiveCharacterTextSplitter(
         separators=[" ", "\n\n", "\n"],
-        chunk_size=1000,
-        chunk_overlap=100,
+        chunk_size=3000,
+        chunk_overlap=150,
         length_function=len,
     )
     # list of strings known as chunks
