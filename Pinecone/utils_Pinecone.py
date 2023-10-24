@@ -35,19 +35,19 @@ def get_index():
         pinecone.create_index(
             name=index_name,
             metric="cosine",
-            dimension=1536,  # 1536 dimension of text-embedding-ada-002
+            dimension=768,  # 768 dimension of text-embedding-ada-002
         )
     index = pinecone.Index(index_name)
     return index
 
 
 def check_duplicate(File):
-    if os.path.exists("Pinecone\Metadata.json"):
-        with open("Pinecone\Metadata.json", "r") as contents:
+    if os.path.exists('Pinecone/Metadata.json'):
+        with open('Pinecone/Metadata.json', "r") as contents:
             dictionary = json.load(contents)
         return File.name in dictionary
     else:
-        with open("Pinecone\Metadata.json", "w+") as contents:
+        with open('Pinecone/Metadata.json', "w+") as contents:
             json.dump({}, contents)
         return False
 
@@ -100,10 +100,10 @@ def add_to_database(chunks, f_name):
     index = get_index()
     ids = [str(uuid4()) for _ in chunks]
     index.upsert(vectors=zip(ids, embeds, metadata))
-    with open("Pinecone\Metadata.json", "r") as contents:
+    with open('Pinecone/Metadata.json', "r") as contents:
         dictionary = json.load(contents)
     dictionary[f_name] = ids
-    with open("Pinecone\Metadata.json", "w") as contents:
+    with open('Pinecone/Metadata.json', "w") as contents:
         json.dump(dictionary, contents)
 
 
@@ -126,10 +126,10 @@ def get_answer(ques):
 
 def delete_file(f_name):
     index = get_index()
-    with open("Pinecone\Metadata.json", "r") as f:
+    with open('Pinecone/Metadata.json', "r") as f:
         dictionary = json.load(f)
     ids = dictionary[f_name.replace("\n", "")]
     index.delete(ids=ids)
     dictionary.pop(f_name.replace("\n", ""))
-    with open("Pinecone\Metadata.json", "w") as contents:
+    with open('Pinecone/Metadata.json', "w") as contents:
         json.dump(dictionary, contents)

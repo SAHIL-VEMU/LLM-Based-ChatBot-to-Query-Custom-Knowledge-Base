@@ -79,10 +79,10 @@ def faiss():
             my_bar.progress(100, text="Upload Complete.")
 
     with st.expander("View / Delete Files"):
-        if not os.path.exists("FAISS\Metadata.json"):
+        if not os.path.exists('FAISS/Metadata.json'):
             st.error("knowledge Base does not Exists!!")
         else:
-            with open("FAISS\Metadata.json", "r") as f:
+            with open('FAISS/Metadata.json', "r") as f:
                 dictionary = json.load(f)
             exsisting_files = list(dictionary)
             if len(exsisting_files) == 0:

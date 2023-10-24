@@ -22,12 +22,12 @@ llm = OpenAI(model_name="gpt-3.5-turbo")
 
 
 def check_duplicate(File):
-    if os.path.exists("FAISS\Metadata.json"):
-        with open("FAISS\Metadata.json", "r") as contents:
+    if os.path.exists('FAISS/Metadata.json'):
+        with open('FAISS/Metadata.json', "r") as contents:
             dictionary = json.load(contents)
         return File.name in dictionary
     else:
-        with open("FAISS\Metadata.json", "w+") as contents:
+        with open('FAISS/Metadata.json', "w+") as contents:
             json.dump({}, contents)
         return False
 
@@ -76,29 +76,29 @@ def add_to_database(chunks, f_name):
     for i in range(len(chunks)):
         metadata.append({"File_Name": f_name})
 
-    if os.path.exists("FAISS\kb"):
-        exsisting_db = FAISS.load_local("FAISS\kb", embeddings)
+    if os.path.exists('FAISS/kb'):
+        exsisting_db = FAISS.load_local('FAISS/kb', embeddings)
         knowledge_base = FAISS.from_texts(
             chunks, embedding=embeddings, metadatas=metadata
         )
         knowledge_base.merge_from(exsisting_db)
-        knowledge_base.save_local("FAISS\kb")
+        knowledge_base.save_local('FAISS/kb')
     else:
         knowledge_base = FAISS.from_texts(
             chunks, embedding=embeddings, metadatas=metadata
         )
-        knowledge_base.save_local("FAISS\kb")
+        knowledge_base.save_local('FAISS/kb')
 
-    if os.path.exists("FAISS\Metadata.json"):
-        with open("FAISS\Metadata.json", "r") as contents:
+    if os.path.exists('FAISS/Metadata.json'):
+        with open('FAISS/Metadata.json', "r") as contents:
             dictionary = json.load(contents)
         dictionary[f_name] = len(chunks)
-        with open("FAISS\Metadata.json", "w") as contents:
+        with open('FAISS/Metadata.json', "w") as contents:
             json.dump(dictionary, contents)
 
 
 def get_relevant_docs(question):
-    knowledge_base = FAISS.load_local("FAISS\kb", embeddings=embeddings)
+    knowledge_base = FAISS.load_local('FAISS/kb', embeddings=embeddings)
     docs_and_score = knowledge_base.similarity_search_with_score(question)
     return docs_and_score
 

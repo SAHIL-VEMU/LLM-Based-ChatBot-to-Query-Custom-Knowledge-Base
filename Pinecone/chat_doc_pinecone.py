@@ -80,10 +80,10 @@ def pine_cone():
             my_bar.progress(100, text="Upload Complete.")
 
     with st.expander("View / Delete Files"):
-        if not os.path.exists("Pinecone\Metadata.json"):
+        if not os.path.exists('Pinecone/Metadata.json'):
             st.error("knowledge Base does not Exists!!")
         else:
-            with open("Pinecone\Metadata.json", "r") as f:
+            with open('Pinecone/Metadata.json', "r") as f:
                 dictionary = json.load(f)
             exsisting_files = list(dictionary)
             if len(exsisting_files) == 0:

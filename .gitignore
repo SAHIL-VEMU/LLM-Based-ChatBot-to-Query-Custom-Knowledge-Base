@@ -5,3 +5,4 @@ FAISS/Metadata.json
 *.pyc
 Pinecone/Metadata.json
 .env
+*.json
